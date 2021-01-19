@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Esgrima - Onde Praticar</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="site_css/nav.css">
+        <link rel="stylesheet" type="text/css" href="esgrima_css/ngd_cont.css">
+        <link rel="stylesheet" type="text/css" href="esgrima_css/ngd_geral.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+        <script src="geojson/nave.geojson"></script>        
+    </head>
+
+    <body>
+        <div id="pagina-geral">
+            <nav>
+                <h1 class="title">Rui&nbspFernandes</h1>
+                <div class="menu">
+                    <ul> 
+                        <li><a href="inicio.html">Início</a></li>
+                        <li><a href="cv.html">Formação e Curriculum Vitae</a></li>
+                        <li><a href="portfolio_slide.html">Portfolio</a></li>
+                        <li class="esgrima">Esgrima</a>
+                            <div class="menu_esgrima">
+                                <ul>
+                                    <li><a href="ngd_apresentacao.html">NGD</a></li>
+                                    <li><a href="equipamento.html">Equipamento</a></li>
+                                    <li><a href="onde_praticar.html">Onde Praticar</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>  
+            </nav>
+
+            <div>
+                <ul class="ngd-menu">
+                    <li><a href="ngd_apresentacao.html">Apresentação</a></li
+                    ><li><a href="ngd_historia.html">História</a></li
+                    ><li><a href="ngd_salaArmas.html">Sala de Armas</a></li
+                    ><li id="active"><a href="ngd_cont.html">Contactos</a></li>
+                </ul>
+            </div>
+
+            <div id="tab">
+                <h2>Localização e Contactos</h2>
+            </div>
+
+            <!--<div id="pessoal">
+                <div>
+                    <h3>Responsáveis pela sala de armas</h3>
+                </div>
+
+                <div id="img-div">
+                    <img class="img" src="imagens/ricardo.jpg">
+                    <img class="img" src="imagens/jonathan.jpg">
+                    <img class="img" src="imagens/rui.jpg">
+                </div>
+
+                <div class="desc">
+                    <h4> Ricardo Gouveia </h4>
+                    <p> Director de Secção <br>
+                        Responsável de Gestão
+                    </p>
+                </div>
+                <div class="desc" style="margin-top: 105px;">
+                    <h4> Jonathan Fontes </h4>
+                    <p> Treinador <br>
+                        Responsável treino físico
+                    </p>
+                </div>
+                <div class="desc" style="margin-top: 100px;">
+                    <h4> Rui Fernandes </h4>
+                    <p> Treinador <br>
+                        Responsável instrução técnica
+                    </p>
+                </div>
+            </div>-->
+
+            <div id="local">
+                <div class="custom-popup" id="map"></div>
+
+                <p id="phone">961040379</p>
+                <div id="icon-group">
+                    <a href="mailto: esgrima.ngd.espinho@gmail.com"><img class="icon" src="imagens/gmail.ico"></a>              
+                    <a href="https://www.facebook.com/EsgrimaEspinho/" target="_blank" rel="noopener noreferrer"><img class="icon" src="imagens/fb.png"></a>          
+                    <img class="icon" src="imagens/phone.png"> 
+                </div>
+
+            </div>
+
+        </div>
+
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+        <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+        <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+        
+        <script>
+             // Mapa
+            var map = L.map('map');
+            
+            // Basemap
+            var esri = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'}).addTo(map);
+            var str_maps = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '©OpenStreetMap' }).addTo(map);
+
+            // GeoJSON salas
+            var nave = L.geoJSON(nsgd, {
+                pointToLayer: function(feature, latlng) {
+                var nsgd_icon = new L.Icon({
+                    iconUrl: 'imagens/ngd.png',
+                    iconSize:     [20, 20], 
+                    iconAnchor:   [12, 12], 
+                    popupAnchor:  [0, -10]
+                    }
+                );
+                return L.marker(latlng, {icon: nsgd_icon});
+                }, 
+                onEachFeature: function (feature, layer) {
+                    let nom = feature.properties.nome;
+                    let mor = feature.properties.morada;
+                    
+                layer.bindPopup('<span class="nome">' + nom + '</span><br>\
+                <span class="prop">' + mor + '</span>'
+                )    
+            }}).addTo(map);
+
+            var baseMaps = {
+                "OpenStreetMaps": str_maps,
+                "ESRI": esri,
+            };
+        
+            L.control.layers(baseMaps, '',  {position: 'topleft'}).addTo(map);
+
+
+            //Geocoding
+            
+            L.Routing.control({ 
+                waypoints: [
+                    L.Routing.waypoint([41.00891493581666, -8.639481488895763]),
+                    L.Routing.waypoint([40.99863692951313, -8.622797723539234], 'Nave Desportiva de Espinho'),
+                ],
+                routeWhileDragging: true,
+                geocoder: L.Control.Geocoder.nominatim(),
+                language: 'pt-PT'
+            }).addTo(map);
+
+            var scale = L.control.scale();
+            scale.addTo(map);
+
+        </script>
+    </body>
+</html>

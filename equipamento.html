@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Esgrima - Equipamento</title>
+        <meta charset = "utf-8">
+        <link rel="stylesheet" type="text/css" href="site_css/nav.css">
+        <link rel="stylesheet" type="text/css" href="esgrima_css/ngd_geral.css">
+        <link rel="stylesheet" type="text/css" href="esgrima_css/equipamento.css">
+        <link rel="stylesheet" type="text/css" href="esgrima_css/equipamento2.css">
+        <link rel="stylesheet" type="text/css" href="esgrima_css/equipamento3.css">
+        
+    </head>
+
+    <body>
+        <div id="pagina-geral">
+            <nav>
+                <h1 class="title">Rui&nbspFernandes</h1>
+                <div class="menu">
+                    <ul> 
+                        <li><a href="inicio.html">Início</a></li>
+                        <li><a href="cv.html">Formação e Curriculum Vitae</a></li>
+                        <li><a href="portfolio_slide.html">Portfolio</a></li>
+                        <li class="esgrima">Esgrima</a>
+                            <div class="menu_esgrima">
+                                <ul>
+                                    <li><a href="ngd_apresentacao.html">NGD</a></li>
+                                    <li><a href="equipamento.html">Equipamento</a></li>
+                                    <li><a href="onde_praticar.html">Onde Praticar</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>  
+            </nav>
+            <div class="tab-container">
+                <!--TABS-->
+                <div class="tab-group">
+                    <span class="tab" onclick="currentTab(1)">Armas</span> 
+                    <span class="tab" onclick="currentTab(2)">Equipamento Protector</span>
+                    <span class="tab" onclick="currentTab(3)">Equipamento Eléctrico</span>
+                </div>
+
+                <!--SLIDESHOW ARMAS-->
+                <div class="myTabs fade">
+                    <div class="slideshow-container">
+                        <div class="mySlides fade">
+                            <div class="desc">
+                                <h2>Espada</h2><br>
+                                <p> 
+                                    &emsp;A espada em si é a maior e mais pesada das armas, tendo também o maior guarda-mão. A lâmina é menos flexível em relação às outras armas, e é forjada em
+                                    forma de V. Trata-se de uma arma de estocada, o que significa que apenas toques com a ponta são assinalados. Considerada a arma com o estilo de jogo mais passivo e 
+                                    com menos exigências técnicas, tornando-a a mais acessível. Tal advém das duas principais regras desta arma: 
+                                    toques simultâneos e uma área de toque válido correspondente a todo o corpo. Quer o sabre quer o florete estão sujeitos a uma restrição à zona válida, isto é, 
+                                    há certas partes do corpo onde os toques "não contam". Adicionalmente, nestas armas o toque nunca é atribuído a ambos os atletas. Já na espada tal é permitido. Desta forma esta é a 
+                                    arma que melhor encapsula o espírito dos antigos duelos: atingir o oponente sem ser atingido de volta. Com a ameaça de qualquer toque em qualquer parte do corpo dar um ponto ao adversário, os atletas exibem maior precaução, tornando os jogos potencialmente mais
+                                    aborrecidos.
+                                </p>
+                            </div>
+                                <img id="epee" src="imagens/epee.jpg">
+                        </div>
+                        <div class="mySlides fade">
+                            <div class="desc">
+                                <h2>Sabre</h2><br>
+                                <p>
+                                    &emsp;O sabre é talvez a arma mais invulgar das três disponíveis na esgrima. Contrariamente à espada e ao florete, esta não se trata de uma arma de estocada. Aqui os toques são registados
+                                    ao longo de toda a lâmina e não apenas em toques com a ponta da arma. Como tal a extremidade da lâmina não apresenta uma ponta, sendo a lâmina dobrada sobre si. A lâmina em si é quadrada
+                                    ficando cada vez mais achatada ao longo do seu comprimento até ao eventual dobramento. A zona para toques válidos está limitada à parte superior do corpo, acima da cintura, isto é
+                                    tronco, braços, mãos e cabeça. Sendo a mão uma zona válida em assaltos de sabre, este possuí um guarda mão largo, tal como a espada. No entanto este apresenta uma ligação do guarda mão
+                                    ao fundo do punho para protecção adicional. É uma arma que se submete à regra da prioridade. Esta regra, em geral, beneficia o atacante e, devido à dificuldade de defender neste modo de jogo,
+                                    os assaltos tendem a ser rápidos e explosivos.
+                                </p>
+                            </div>
+                            <img id="saber" src="imagens/saber.jpg">
+                        </div>
+                        <div class="mySlides fade">
+                            <div class="desc">
+                                <h2>Florete</h2><br>
+                                <p>
+                                    &emsp;O florete é a arma mais praticada em Portugal, e a mais representativa da esgrima internacionalmente. É a arma mais pequena das três, tendo semelhanças com a espada na medida
+                                    em que é uma arma de estocada, mas apresenta uma lâmina rectangular parecida ao sabre, salvo o seu término. Tal como o sabre, os assaltos em florete estão sujeitos à regra da prioridade.
+                                    No entanto, sendo a zona válida ainda mais reduzida (apenas o tronco) e sendo uma arma de estocada (o que facilita a defesa), os assaltos tendem a ser mais balançados. Não tão passivos como
+                                    espada devido à vantagem inerente do atacante, mas menos agressivos que sabre devido a uma defesa mais facilitada. O elemento mais que facilmente identifica o florete é o seu pequeno guarda mão já
+                                    que aqui esta não se trata de zona válida.
+                                </p>
+                            </div>
+                            <img id="foil" src="imagens/foil.jpg">
+                        </div>
+                    
+                        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                    </div>
+
+
+                
+                    <br>
+                
+                    <div class="dot-group">
+                        <span class="dot" onclick="currentSlide(1)"></span> 
+                        <span class="dot" onclick="currentSlide(2)"></span> 
+                        <span class="dot" onclick="currentSlide(3)"></span> 
+                    </div>
+                
+                    <script>
+                    var slideIndex = 1;
+                    showSlides(slideIndex);
+                    
+                    function plusSlides(n) {
+                        showSlides(slideIndex += n);
+                    }
+                    
+                    function currentSlide(n) {
+                        showSlides(slideIndex = n);
+                    }
+                    
+                    function showSlides(n) {
+                    var i;
+                    var slides = document.getElementsByClassName("mySlides");
+                    var dots = document.getElementsByClassName("dot");
+                    if (n > slides.length) {slideIndex = 1}    
+                    if (n < 1) {slideIndex = slides.length}
+                    for (i = 0; i < slides.length; i++) {
+                        slides[i].style.display = "none";  
+                    }
+                    for (i = 0; i < dots.length; i++) {
+                        dots[i].className = dots[i].className.replace(" active", "");
+                    }
+                    slides[slideIndex-1].style.display = "block";  
+                    dots[slideIndex-1].className += " active";
+                    }
+                    </script>
+                </div>
+
+                <!--SLIDESHOW PROTECTOR-->
+                <div class="myTabs fade">
+                    <div class="slideshow-container2" class="slideshow-container-mask">
+                        <div class="mySlides2 fade">
+                            <div class="desc2">
+                                <h2>Máscara</h2><br>
+                                <p> 
+                                    &emsp;A máscara é provavelmente uma peça de equipamento tão icónica da esgrima quanto as armas, e com boa razão! É uma peça essencial à segurança da cabeça, parte do corpo onde os danos
+                                    podem ser graves caso haja contacto entre esta e uma arma. A rede compõe a maioria da máscara e está desenhada para proporcionar visão ao atleta sem comprometer a sua segurança.
+                                    Para tal esta rede é composta de uma malha muito fina de aço inoxidável, onde todas as intersecções dos "fios" da malha são individualmente soldados para garantir a sua integridade.
+                                    Na parte inferior da máscara encontramos a babete, tendo esta a função de proteger o pescoço. Pode ser eléctrica ou não eléctrica.
+                                    Estando uma das partes mais sensíveis do corpo humano em questão, estas máscaras são construídas de forma a aguentar grandes impactos.
+                                    Existem dois categorias de protecção. A categoria mais baixa exige uma resistência mínima de 600N (Newtons) e uma categoria de resistência mais elevada
+                                    com um requisito mínimo de 1600N.
+                                </p>
+                            </div>
+                            <img id="mask" src="imagens/mask.jpg">
+                        </div>
+                        <div class="mySlides2 fade">
+                            <div class="desc2">
+                                <h2>Gilet e Calças</h2><br>
+                                <p>
+                                    &emsp;Não tão icónico como a máscara mas igualmente essencial são o gilet e as calças. O gilet, termo importado do francês e referente ao "casaco", destina-se à protecção da parte superior
+                                    do corpo, excluindo as mãos e a cabeça, ainda que consiga proteger o pescoço juntamente com a babete. A parte inferior do equipamento é simplesmente conhecida como calças e, tal como
+                                    a peça de vestuário comum do mesmo nome, protege as pernas. Ambos são fabricados a partir dos mesmos materiais e a sua resistência vai variar dependendo destes. Tal como a babete, os
+                                    fatos são geralmente fabricados partir de algodão ou nylon. Para atingirem os níveis de resistência exigidos pelos órgãos reguladores, estes materiais são usualmente reforçados com Kevlar
+                                    ou outros tecidos balísticos. Calças de tamanho adequado terminam após os joelhos, sendo necessário o uso de meias longas que cubram a restante perna.
+                                </p>
+                            </div>
+                            <img id="suit" src="imagens/suit.jpg">
+                        </div>
+                    
+                        <a class="prev2" onclick="plusSlides2(-1)">&#10094;</a>
+                        <a class="next2" onclick="plusSlides2(1)">&#10095;</a>
+                    </div>
+                    
+                    <br>
+                    
+                    <div class="dot-group2">
+                        <span class="dot2" onclick="currentSlide2(1)"></span> 
+                        <span class="dot2" onclick="currentSlide2(2)"></span> 
+                    </div>
+                    
+                    <script>
+                    var slideIndex2 = 1;
+                    showSlides2(slideIndex2);
+                    
+                    function plusSlides2(n) {
+                        showSlides2(slideIndex2 += n);
+                    }
+                    
+                    function currentSlide2(n) {
+                        showSlides2(slideIndex2 = n);
+                    }
+                    
+                    function showSlides2(n) {
+                    var i2;
+                    var slides2 = document.getElementsByClassName("mySlides2");
+                    var dots2 = document.getElementsByClassName("dot2");
+                    if (n > slides2.length) {slideIndex2 = 1}    
+                    if (n < 1) {slideIndex2 = slides2.length}
+                    for (i2 = 0; i2 < slides2.length; i2++) {
+                        slides2[i2].style.display = "none";  
+                    }
+                    for (i2 = 0; i2 < dots2.length; i2++) {
+                        dots2[i2].className = dots2[i2].className.replace(" active", "");
+                    }
+                    slides2[slideIndex2-1].style.display = "block";  
+                    dots2[slideIndex2-1].className += " active";
+                    }
+                    </script>
+                </div>
+                
+                <!--SLIDESHOW ELECTRICO-->
+                <div class="myTabs fade">
+                    <div class="slideshow-container3">
+                        <div class="mySlides3 fade3">
+                            <div  class="desc3">
+                                <h2>Gilet Eléctrico</h2><br>
+                                <p> 
+                                    &emsp;Esta peça de equipamento trata-se de um "colete" condutor à electricidade, correspondendo este à área válida para toque da arma em questão. Até à segunda metade do século XX usava-se pó colorido nas pontas das armas de forma a identificar onde é que o atirador tinha sido atingido pelo oponente, um pouco como paintball.
+                                    Tudo isto mudou com a introdução de material eléctrico. Agora é possível saber se o toque foi em zona válida, ou não, electronicamente. Os atiradores encontram-se ligados ao aparelho correspondente à sua pista
+                                    por um fio eléctrico, que por sua vez está ligado à sua arma, seguindo a lâmina até à sua extremidade. Aqui tem uma ponta que funciona como botão. Se este botão tocar numa superfície não condutora o aparelho
+                                    liga a sua luz branca. Caso o botão interaja como o gilet eléctrico do oponente o circuito fecha e o aparelha liga a luz de cor correspondente ao atleta. Estes gilets não possuem qualquer 
+                                    propriedade protectora, sendo exclusivamente para a fácil identificação do local do toque.    
+                                </p>
+                            </div>
+                            <img id="lame" src="imagens/lame.jpg">
+                        </div>
+                        <div class="mySlides3 fade3">
+                            <div class="desc3">
+                                <h2>Fio de Corpo</h2><br>
+                                <p>
+                                    &emsp;O fio de corpo faz a ligação da arma ao aparelho da pista a ser usada no assalto. Consiste em fio de cobre com três ligações. Uma extremidade está ligada à arma através de 
+                                    uma ficha existente por detrás do guarda-mão cuja forma varia de arma para arma, e mesmo de região em região tal como as tomadas comuns. A outra extremidade liga a uma ficha
+                                    que por sua vez se liga finalmente ao aparelho. Existe uma terceira saída neste fio que se conecta ao gilet eléctrico do próprio atleta através de um crocodilo. Esta, juntamente 
+                                    com as armas, tende a ser a peça de equipamento que se degrada mais rapidamente e requer maior manutenção. A "canibalização" de peças em fios e armas avariadas é algo extremamente
+                                    comum na modalidade a fim de encurtar despesas. Isto obriga aos atletas a adquirir alguns conhecimentos muito básicos de sobre meterial eléctrico, sobretudo no que toca a ligações
+                                    entre peças e isolamento.     
+                                </p>
+                            </div>
+                            <img id="cord" src="imagens/cord.jpg">
+                        </div>
+                    
+                        <a class="prev3" onclick="plusSlides3(-1)">&#10094;</a>
+                        <a class="next3" onclick="plusSlides3(1)">&#10095;</a>
+                    </div>
+                    
+                    <br>
+                    
+                    <div class="dot-group3">
+                        <span class="dot3" onclick="currentSlide3(1)"></span> 
+                        <span class="dot3" onclick="currentSlide3(2)"></span> 
+                    </div>
+                </div>   
+                <script>
+                    var slideIndex3 = 1;
+                    showSlides3(slideIndex3);
+                    
+                    function plusSlides3(n) {
+                        showSlides3(slideIndex3 += n);
+                    }
+                    
+                    function currentSlide3(n) {
+                        showSlides3(slideIndex3 = n);
+                    }
+                    
+                    function showSlides3(n) {
+                    var i3;
+                    var slides3 = document.getElementsByClassName("mySlides3");
+                    var dots3 = document.getElementsByClassName("dot3");
+                    if (n > slides3.length) {slideIndex3 = 1}    
+                    if (n < 1) {slideIndex3 = slides3.length}
+                    for (i3 = 0; i3 < slides3.length; i3++) {
+                        slides3[i3].style.display = "none";  
+                    }
+                    for (i3 = 0; i3 < dots3.length; i3++) {
+                        dots3[i3].className = dots3[i3].className.replace(" active", "");
+                    }
+                    slides3[slideIndex3-1].style.display = "block";  
+                    dots3[slideIndex3-1].className += " active";
+                    }
+
+                    //script tabs
+                    var tabIndex = 1;
+                    showTab(tabIndex);
+
+                    function currentTab(n) {
+                        showTab(tabIndex = n);
+                    }
+                    
+                    function showTab(n) {
+                    var t;
+                    var tabs = document.getElementsByClassName("myTabs");
+                    var dots4 = document.getElementsByClassName("tab");
+                    if (n > tabs.length) {tabIndex = 1}    
+                    if (n < 1) {tabIndex = tabs.length}
+                    for (t = 0; t < tabs.length; t++) {
+                        tabs[t].style.display = "none";  
+                    }
+                    for (t = 0; t < dots4.length; t++) {
+                        dots4[t].className = dots4[t].className.replace(" active", "");
+                    }
+                    tabs[tabIndex-1].style.display = "block";  
+                    dots4[tabIndex-1].className += " active";
+                    }
+                </script>
+            </div>
+        </div>
+    </body>
+</html>

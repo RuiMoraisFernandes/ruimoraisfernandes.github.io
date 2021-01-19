@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Esgrima - Onde Praticar</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="site_css/nav.css">
+        <link rel="stylesheet" type="text/css" href="esgrima_css/onde_praticar.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+        <link rel="stylesheet" href="Leaflet.markercluster-1.4.1/dist/MarkerCluster.css">
+        <link rel="stylesheet" href="Leaflet.markercluster-1.4.1/dist/MarkerCluster.Default.css">
+        <link rel="stylesheet" href="leaflet-search-master/src/leaflet-search.css">
+        <link rel="stylesheet" href="Leaflet.Control.Layers.Tree-master/L.Control.Layers.Tree.js">
+        <link rel="stylesheet" href="Leaflet.Control.Layers.Tree-master/L.Control.Layers.Tree.css">
+        <script src="geojson/salas.geojson"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        
+    </head>
+
+    <body>
+        <nav>
+            <div class="bannerNav">
+                <!--<img src="imagens/tua.jpg" style = "z-index: -1000; width: fit-content; height: auto; float: left">-->
+            </div>
+            <h1 class="title">Rui&nbspFernandes</h1>
+            <div class="menu">
+                <ul> 
+                    <li><a href="inicio.html">Início</a></li>
+                    <li><a href="cv.html">Formação e Curriculum Vitae</a></li>
+                    <li><a href="portfolio_slide.html">Portfolio</a></li>
+                    <li class="esgrima"><a href="#">Esgrima</a>
+                        <div class="menu_esgrima">
+                            <ul>
+                                <li><a href="esgrima_intro.html">O que é</a></li>
+                                <li><a href="equipamento.html">Equipamento</a></li>
+                                <li><a href="onde_praticar.html">Onde Praticar</a></li>
+                                <li><a href="#">NSGD</a></li>
+                                <li><a href="#">Competição</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>  
+        </nav>    
+
+        <ul>
+            <li></li><p><strong>Armas</strong></p>
+            <li><input class="check" id="espada" type="checkbox"/><label for='espada'> Espada</label></li>
+            <li><input class="check" id="sabre" type="checkbox"/><label for='Sabre'> Sabre</label></li>
+            <li><input class="check" id="florete" type="checkbox"/><label for='florete'> Florete</label></li>
+        </ul>
+
+        <!--<img class="bannerLeft" src="imagens/banner_left.jfif">
+        <img class="bannerRight" src="imagens/banner_right.jfif">-->
+        <div class="onde"> Salas de Armas em Portugal</div>
+        <div class="custom-popup" id="map">
+
+        </div>
+
+        
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        
+        <script src="Leaflet.markercluster-1.4.1/dist/leaflet.markercluster-src.js"></script>
+
+        <script src="leaflet-search-master/src/leaflet-search.js"></script>
+
+        <script>
+        // Mapa
+        var map = L.map('map',{ center: [37.5, -18.1], zoom: 6});
+        
+        // Basemap
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '©OpenStreetMap' }).addTo(map);
+
+        //Popup
+        var popup = L.popup();
+                
+        //Grupo cluster
+        var markers = L.markerClusterGroup();
+
+        // GeoJSON salas
+        var salasArmas = L.geoJSON(salas, {
+            pointToLayer: function(feature, latlng) {
+            var salas_icon = new L.Icon({
+                iconUrl: 'imagens/fencing_icon2_white.png',
+                iconSize:     [35, 30.5], 
+                iconAnchor:   [12, 12], 
+                popupAnchor:  [6, -5]     
+                }
+            );
+            return L.marker(latlng, {icon: salas_icon});
+            },
+            onEachFeature: function (feature, layer) {
+                let nom = feature.properties.nome;
+                let mor = feature.properties.morada;
+                let tel = feature.properties.telefone;
+                let mail = feature.properties.e_mail;
+                let web = feature.properties.website;
+                let atl = feature.properties.n_atletas;
+                let inst = feature.properties.inst_qual;
+                let epd = feature.properties.espada;
+                let sbr = feature.properties.sabre;
+                let flt = feature.properties.florete;
+                let img_epee = '';
+                let img_saber = '';
+                let img_foil = '';
+                let leg_epee = '';
+                let leg_saber = '';
+                let leg_foil = '';
+
+                if (epd == "Sim") {
+                    img_epee = '<img class="weapon-icon" src=imagens/epee_icon.png>'
+                    leg_epee = '<span class="leg-opa">Espada</span>'}
+                else {
+                    img_epee = '<img class="weapon-transp" src=imagens/epee_icon.png>'
+                    leg_epee = '<span class="leg-transp">Espada</span>'};
+                
+                if (sbr == "Sim") {
+                    img_saber = '<img class="weapon-icon" src=imagens/saber_icon.png>'
+                    leg_saber = '<span class="leg-opa">Sabre</span>'}
+                else {
+                    img_saber = '<img class="weapon-transp" src=imagens/saber_icon.png>'
+                    leg_saber = '<span class="leg-transp">Sabre</span>'};
+
+                if (flt == "Sim") {
+                    img_foil = '<img class="weapon-icon" src=imagens/foil_icon.png>'
+                    leg_foil = '<span class="leg-opa">Florete</span>'}
+                else {
+                    img_foil = '<img class="weapon-transp" src=imagens/foil_icon.png>'
+                    leg_foil = '<span class="leg-transp">Florete</span>'};  
+                
+                layer.bindPopup('<span class="nome">' + nom + '</span><br>\
+                <span class="info">Morada: </span><span class="prop">' + mor + '</span><br>\
+                <span class="info">Telefone: </span><span class="prop">' + tel + '</span><br>\
+                <span class="info">E-Mail: </span><span class="prop"><a href="mailto: ' + mail + '">' +  mail + '</a></span><br>\
+                <span class="info">Página Web: </span><span class="prop"><a href="' + web + '">' + web + '</a></span><br>\
+                <span class="info">Número de Atletas: </span><span class="prop">' + atl + '</span><br>\
+                <span class="info">Qualidade das Instalações: </span><span class="prop">' + inst + '</span><br>\
+                <span class="info"> Armas Disponíveis:</span><br>\
+                <span>' + img_epee + '<span>' + img_saber + '<span>' + img_foil + '<br>\
+                ' + leg_epee + leg_saber + leg_foil
+                )}
+            });
+
+        markers.addLayer(salasArmas).addTo(map);
+
+        var overlayMaps = {
+            "Salas de armas": markers
+        };
+        L.control.layers('', overlayMaps).addTo(map);
+        
+        // Barra de pesquisa
+        var controlSearch = new L.Control.Search({
+            position:'topleft',
+            layer: markers,
+            initial: false,
+            zoom: 15,
+            marker: false,
+            textPlaceholder: 'Pesquisar...',
+            propertyName: 'nome'    
+        }).addTo(map);
+        
+        
+
+
+        //div control armas
+        var weapon_control = L.control({position: 'topright'});
+        weapon_control.onAdd = function (map) {
+        var weapon_control = L.DomUtil.create('div_weapon', 'control');
+        weapon_control.id = 'container'
+        return weapon_control
+        }
+        weapon_control.addTo(map);
+
+        // esp control
+
+
+        $('#espada').click(function() {
+            if ($(this).is(':checked')) {L.geoJSON(salas, {
+                        pointToLayer: function(feature, latlng) {
+                        salas_icon = new L.Icon({
+                        iconUrl: 'imagens/fencing_icon2_red.png',
+                        iconSize:     [35, 30.5], 
+                        iconAnchor:   [12, 12], 
+                        popupAnchor:  [6, -5]     
+                        }
+                    )}});
+            }});
+        // create the control
+var command = L.control({position: 'topright'});
+
+    command.onAdd = function (map) {
+        var div = L.DomUtil.create('div', 'command');
+
+        div.innerHTML = '<form><input id="command" type="checkbox"/>command</form>'; 
+        return div;
+    };
+
+    command.addTo(map);
+
+
+    // add the event handler
+    function handleCommand() {
+    alert("Clicked, checked = " + this.checked);
+    }
+
+    document.getElementsByClassName ("espada").addEventListener ("click", handleCommand, false);
+
+            //div armas
+        //var armas = L.control({position: 'topright'});
+        //armas.onAdd = function (map) {
+        //    var div_armas = L.DomUtil.create('div', 'armas');
+        //    return div_armas;
+        //};
+        //armas.addTo(map);
+
+
+        // espada control
+        var espada = L.control({position: 'topright'});
+        espada.onAdd = function (map) {
+            var div_esp = L.DomUtil.create('div', 'espada');
+            div_esp.innerHTML = '<form><input id="espada_filtro" type="checkbox"/>Espada<form>'; 
+            return div_esp;
+        };
+        espada.addTo(map);
+
+        // sabre control
+        var sabre = L.control({position: 'topright'});
+        sabre.onAdd = function (map) {
+            var div_sbr = L.DomUtil.create('div', 'sabre');
+            div_sbr.innerHTML = '<form><input id="sabre_filtro" type="checkbox"/>Sabre<form>'; 
+            return div_sbr;
+        };
+        sabre.addTo(map);
+
+        // florete control
+        var florete = L.control({position: 'topright'});
+        florete.onAdd = function (map) {
+            var div_flt = L.DomUtil.create('div', 'florete');
+            div_flt.innerHTML = '<form><input id="florete_filtro" type="checkbox"/>Florete<form>'; 
+            return div_flt;
+        };
+        florete.addTo(map);
+
+        // add the event handler
+        function handleCommand() {
+        alert("Clicked, checked = " + this.checked);
+        }
+
+        document.getElementById ("espada_filtro").addEventListener ("click", handleCommand, false);
+
+        </script>
+    </body>
+</html>

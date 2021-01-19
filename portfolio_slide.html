@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rui Fernandes - Portfolio</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="site_css/nav.css">
+        <link rel="stylesheet" type="text/css" href="site_css/portfolio.css">
+
+    </head>
+    <body>
+        <div id="pagina-geral">
+            <nav>
+                <h1 class="title">Rui&nbspFernandes</h1>
+                <div class="menu">
+                    <ul> 
+                        <li><a href="inicio.html">Início</a></li>
+                        <li><a href="cv.html">Formação e Curriculum Vitae</a></li>
+                        <li><a href="portfolio_slide.html">Portfolio</a></li>
+                        <li class="esgrima">Esgrima</a>
+                            <div class="menu_esgrima">
+                                <ul>
+                                    <li><a href="ngd_apresentacao.html">NGD</a></li>
+                                    <li><a href="equipamento.html">Equipamento</a></li>
+                                    <li><a href="onde_praticar.html">Onde Praticar</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>  
+            </nav>
+            <div class="slideshow-container">
+                <div class="mySlides fade">
+                    <div  class="desc">
+                        <p> 
+                            Mapa desenvolvido no âmbito da disciplina de Seminário de Projecto. Modelo da probabilidade de ocorrência
+                            de património romano no distrito de Bragança. Construído com base em diversas técnicas de análise espacial e 
+                            regressão logística, utilizando vários indicadores relevantes para o caso (altitudes, declives, distância a cursos de água, etc).
+                        </p>
+                        <div class="dl_ficheiro" >
+                            <a href="trabalhos/romanos_rui_fernandes.pdf" target="_blank" rel="noopener noreferrer">Download de Relatório Integral (PDF)</a>
+                        </div>
+                    </div>
+                    <div>
+                        <img id="img1" src="imagens/imagens_port/Prob.jpg" style="width:575px">
+                    </div>
+                </div>
+
+                <div class="mySlides fade">
+                    <div class="desc">
+                        <p>
+                            Mapa desenvolvido no âmbito da disciplina de Análise Espacial e Ordenamento do Território. Realizado recorrendo, naturalmente, a feramentas de análise espacial, 
+                            à semelhança do ponto anterior. Porém a base teórica e as variáveis em questão diferem, sendo este focado na temática dos riscos, em particular os incêndios
+                            florestais. 
+                        </p>
+                        <div class="dl_ficheiro">
+                            <a href="trabalhos/trabalho_pratico_ruifernandes.pdf" target="_blank" rel="noopener noreferrer">Download de Relatório Integral (PDF)</a>
+                        </div>
+                    </div>
+                    <div>
+                        <img id="img2" src="imagens/imagens_port/SuS.jpg" style="width:575px">
+                    </div>
+                </div>
+                
+
+                <div class="mySlides fade">
+                    <div class="desc">
+                        <p>
+                            Mapa construído no âmbito da disciplina de Deteção Remota e Ordenamento do Território. Construido tendo por base imagens de satélite proveniente da missão Sentinel-2 
+                            da Agência Espacial Europeia. A classificação foi realizada de forma semi-automática, tendo por base zonas de exemplo definidas por mim. No relatório encontram-se 
+                            índices de vegetação (NDVI), bem como diferentes combinações de bandas para identificação de vegetação, áreas artificiais ou agricultura.
+                        </p>
+                        <div class="dl_ficheiro">
+                            <a href="trabalhos/relatorio_ruifernandes.pdf" target="_blank">Download de Relatório Integral (PDF)</a>
+                        </div>
+                    </div>
+                    <div >
+                        <img id="img3" src="imagens/imagens_port/ocupacao_verao.jpg" rel="noopener noreferrer" style="width:500px">
+                    </div>
+                </div>
+
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                
+                <div class="dot-bar">
+                    <span class="dot" onclick="currentSlide(1)"></span> 
+                    <span class="dot" onclick="currentSlide(2)"></span> 
+                    <span class="dot" onclick="currentSlide(3)"></span> 
+                </div>
+            </div>
+        </div>
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+        <!-- The Close Button -->
+        <span class="close">&times;</span>
+    
+        <!-- Modal Content (The Image) -->
+        <img class="modal-content" id="img-amp">
+        <script>
+
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {slideIndex = 1}    
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";  
+        dots[slideIndex-1].className += " active";
+        }
+
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the image and insert it inside the modal - use its "alt" text as a caption
+
+        var img1 =  document.getElementById("img1")
+        var modalImg = document.getElementById("img-amp");
+        img1.onclick = function(){
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        }
+
+        var img2 =  document.getElementById("img2")
+        var modalImg = document.getElementById("img-amp");
+        img2.onclick = function(){
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        }
+
+        var img3 =  document.getElementById("img3")
+        var modalImg = document.getElementById("img-amp");
+        img3.onclick = function(){
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        }
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+        modal.style.display = "none";
+        }
+
+        </script>
+    </body>
+</html> 
+

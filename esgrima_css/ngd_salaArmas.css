@@ -1,0 +1,35 @@
+p {
+    font-family: Helvetica, sans-serif;
+    width: 95%;
+    justify-content: center;
+    margin-top: 30px;
+    margin-left: 40px;
+    max-width: 800px;
+    font-size: 15px;
+    color: rgb(83, 82, 82);
+}
+
+#img-div{
+    float: right;
+    margin-right: 40px;
+}
+
+#sala, #bancada {
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 370px;
+    height: auto;
+    display: block;
+}
+
+#bancada {
+    margin-top: 10px;
+}
+.treinos {
+    font-family: Helvetica, sans-serif;
+    font-size: 15px;
+    line-height: 20px;
+    margin-top: 10px;
+    margin-left: 55px;
+    color: rgb(83, 82, 82);
+}

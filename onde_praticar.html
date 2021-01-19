@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Esgrima - Onde Praticar</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="site_css/nav.css">
+        <link rel="stylesheet" type="text/css" href="esgrima_css/onde_praticar.css">
+        <link rel="stylesheet" type="text/css" href="esgrima_css/ngd_geral.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+        <link rel="stylesheet" href="Leaflet.markercluster-1.4.1/dist/MarkerCluster.css">
+        <link rel="stylesheet" href="Leaflet.markercluster-1.4.1/dist/MarkerCluster.Default.css">
+        <link rel="stylesheet" href="leaflet-search-master/src/leaflet-search.css">
+        <link rel="stylesheet" href="Leaflet.Legend-master/leaflet-legend.css">
+
+        <script src="geojson/salas.geojson"></script>
+        <script src="geojson/competicoes_qgis.geojson"></script>
+        
+    </head>
+
+    <body>
+        <div id="pagina-geral">
+            <nav>
+                <h1 class="title">Rui&nbspFernandes</h1>
+                <div class="menu">
+                    <ul> 
+                        <li><a href="inicio.html">Início</a></li>
+                        <li><a href="cv.html">Formação e Curriculum Vitae</a></li>
+                        <li><a href="portfolio_slide.html">Portfolio</a></li>
+                        <li class="esgrima">Esgrima</a>
+                            <div class="menu_esgrima">
+                                <ul>
+                                    <li><a href="ngd_apresentacao.html">NGD</a></li>
+                                    <li><a href="equipamento.html">Equipamento</a></li>
+                                    <li><a href="onde_praticar.html">Onde Praticar</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>  
+            </nav>
+        
+            <div class="onde"> <h2>Salas de Armas em Portugal</h2></div>
+            <div class="custom-popup" id="map"></div>
+
+            <div id="legend">
+                <div id="leg-item-geral">
+                    <img class="leg-icon-geral" src="imagens/fencing_icon2_white.png">
+                    <p class="leg-text">Sala de Armas</p>
+                </div>
+                <div id="leg-item-espada">
+                    <img class="leg-icon-espada" src="imagens/fencing_icon2_red.png">
+                    <p class="leg-text">Sala de Armas com Espada</p>
+                </div>
+                <div id="leg-item-sabre">
+                    <img class="leg-icon-sabre" src="imagens/fencing_icon2_blue.png">
+                    <p class="leg-text">Sala de Armas com Sabre</p>
+                </div>
+                <div id="leg-item-florete">
+                    <img class="leg-icon-florete" src="imagens/fencing_icon2_green.png">
+                    <p class="leg-text">Sala de Armas com Florete</p>
+                </div>
+                <div id="leg-item-comp">
+                    <img class="leg-icon-comp" src="imagens/fencing_icon3.png">
+                    <p class="leg-text">Competição</p>
+                </div>
+                <div id="leg-item-prop">
+                    <img class="leg-icon-prop" src="imagens/simb_prop.png">
+                    <p class="leg-text">Proporcional por Nº de Atletas</p>
+                </div>
+             </div>
+
+
+
+        </div>
+
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="Leaflet.markercluster-1.4.1/dist/leaflet.markercluster-src.js"></script>
+        <script src="leaflet-search-master/src/leaflet-search.js"></script>
+        <script src="Leaflet.Legend-master/leaflet-legend.js"></script>
+
+        <script>
+        // Mapa
+        var map = L.map('map',({center: [37.5, -18.1], zoom: 6}));
+        
+        // Basemap
+        var strMaps = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '©OpenStreetMap' }).addTo(map);
+        var esri = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'}).addTo(map);
+        var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        });
+
+        //Popup
+        var popup = L.popup();
+                
+        //Grupo cluster
+        var markers = L.markerClusterGroup();
+        var addonMarkers = L.markerClusterGroup();
+        var addonMarkers1 = L.markerClusterGroup();
+        var addonMarkers2 = L.markerClusterGroup();
+        var addonMarkers3 = L.markerClusterGroup();
+
+        // GeoJSON salas
+        var salasArmas = L.geoJSON(salas, {
+            pointToLayer: function(feature, latlng) {
+            var salas_icon = new L.Icon({
+                iconUrl: 'imagens/fencing_icon2_white.png',
+                iconSize:     [35, 30.5], 
+                iconAnchor:   [12, 12], 
+                popupAnchor:  [6, -5]     
+                }
+            );
+            return L.marker(latlng, {icon: salas_icon});
+            }, 
+            onEachFeature: function (feature, layer) {
+                let nom = feature.properties.nome;
+                let mor = feature.properties.morada;
+                let tel = feature.properties.telefone;
+                let mail = feature.properties.e_mail;
+                let web = feature.properties.website;
+                let atl = feature.properties.n_atletas;
+                let inst = feature.properties.inst_qual;
+                let epd = feature.properties.espada;
+                let sbr = feature.properties.sabre;
+                let flt = feature.properties.florete;
+                let img_epee = '';
+                let img_saber = '';
+                let img_foil = '';
+                let leg_epee = '';
+                let leg_saber = '';
+                let leg_foil = '';
+
+                if (epd == "Sim") {
+                    img_epee = '<img class="weapon-icon" src=imagens/epee_icon.png>'
+                    leg_epee = '<span class="leg-opa">Espada</span>'}
+                else {
+                    img_epee = '<img class="weapon-transp" src=imagens/epee_icon.png>'
+                    leg_epee = '<span class="leg-transp">Espada</span>'};
+                
+                if (sbr == "Sim") {
+                    img_saber = '<img class="weapon-icon" src=imagens/saber_icon.png>'
+                    leg_saber = '<span class="leg-opa">Sabre</span>'}
+                else {
+                    img_saber = '<img class="weapon-transp" src=imagens/saber_icon.png>'
+                    leg_saber = '<span class="leg-transp">Sabre</span>'};
+
+                if (flt == "Sim") {
+                    img_foil = '<img class="weapon-icon" src=imagens/foil_icon.png>'
+                    leg_foil = '<span class="leg-opa">Florete</span>'}
+                else {
+                    img_foil = '<img class="weapon-transp" src=imagens/foil_icon.png>'
+                    leg_foil = '<span class="leg-transp">Florete</span>'};
+                ;  
+
+                layer.bindPopup('<span class="nome">' + nom + '</span><br>\
+                <span class="info">Morada: </span><span class="prop">' + mor + '</span><br>\
+                <span class="info">Telefone: </span><span class="prop">' + tel + '</span><br>\
+                <span class="info">E-Mail: </span><span class="prop"><a href="mailto: ' + mail + '">' +  mail + '</a></span><br>\
+                <span class="info">Página Web: </span><span class="prop"><a href="' + web + '">' + web + '</a></span><br>\
+                <span class="info">Número de Atletas: </span><span class="prop">' + atl + '</span><br>\
+                <span class="info">Qualidade das Instalações: </span><span class="prop">' + inst + '</span><br>\
+                <span class="info"> Armas Disponíveis:</span><br>\
+                <span>' + img_epee + '<span>' + img_saber + '<span>' + img_foil + '<br>\
+                ' + leg_epee + leg_saber + leg_foil
+                )    
+            }});
+
+        markers.addLayer(salasArmas);
+
+        
+        // GeoJSON competicoes
+        var competicoes = L.geoJSON(comp, {
+            pointToLayer: function(feature, latlng) {
+            var comp_icon = new L.Icon({
+                iconUrl: 'imagens/fencing_icon3.png',
+                iconSize:     [35, 30.5], 
+                iconAnchor:   [12, 12], 
+                popupAnchor:  [0, 0]     
+                }
+            );
+            return L.marker(latlng, {icon: comp_icon});
+            }, 
+            onEachFeature: function (feature, layer) {
+                let nam = feature.properties.nome;
+                let lol = feature.properties.Local;
+                let mes = feature.properties.mes;
+                let dia = feature.properties.dia;
+                let arm = feature.properties.armas;
+                let esl = feature.properties.escalao;
+                let url = feature.properties.ig_url;
+                
+                layer.bindPopup('<span class="nome">' + nam + '</span><br>\
+                <span class="info">Local: </span><span class="prop">' + lol + '</span><br>\
+                <span class="info">Data: </span><span class="prop">' + dia + '<span> de </span>' + mes + '</span><br>\
+                <span class="info">Armas: </span><span class="prop">' + arm + '</span><br>\
+                <span class="info">Escalão: </span><span class="prop">' + esl + '</span><br>'
+                + url
+                )
+            }});
+           
+        addonMarkers.addLayer(competicoes);
+
+        
+        // Barra de pesquisa
+        var controlSearch = new L.Control.Search({
+            position:'topleft',
+            layer: markers,
+            initial: false,
+            zoom: 15,
+            marker: false,
+            textPlaceholder: 'Pesquisar...',
+            propertyName: 'nome'    
+        }).addTo(map);
+
+        //LAYER SIMBOLOS PROPORCIONAIS
+        salas.features.sort(function(a, b) {
+        return b.properties.n_atletas - a.properties.n_atletas;
+        });
+
+        atletasLayer = L.geoJSON(salas, {
+            pointToLayer: function(feature,latlng) {
+                return L.circleMarker(latlng, {
+                color: 'darkblue',
+                weight: 1,
+                fillColor: 'orange',
+                fillOpacity: 0.8,
+                radius: getRadius(feature.properties.n_atletas)
+            })},
+            onEachFeature: function (feature, layer) {
+                let nme = feature.properties.nome;
+                let atl = feature.properties.n_atletas;
+
+                layer.bindPopup(
+                '<span class="prop-name">' + nme + '</span><br>\
+                <span class="prop">' + atl + ' atletas</span>'
+                )
+                
+                layer.on('mouseover', function() {
+                layer.setStyle({
+                    fillColor: 'red'
+                });
+                });
+                layer.on('mouseout', function() {
+                layer.setStyle({
+                    fillColor: 'orange'
+                });
+                });
+            }});
+        
+        function getRadius(area) {
+            var radius = Math.sqrt(area/Math.PI);
+            return radius * 3;
+        }
+
+        //FILTRO ESPADA
+        var salasEspada = L.geoJson(salas, {
+            filter: espadaFilter,
+            pointToLayer: function(feature, latlng) {
+            var espada_icon = new L.Icon({
+                iconUrl: 'imagens/fencing_icon2_red.png',
+                iconSize:     [35, 30.5], 
+                iconAnchor:   [12, 12], 
+                popupAnchor:  [6, -5]     
+                }
+            );
+            return L.marker(latlng, {icon: espada_icon});
+            }, 
+            onEachFeature: function (feature, layer) {
+                let nom = feature.properties.nome;
+                let mor = feature.properties.morada;
+                let tel = feature.properties.telefone;
+                let mail = feature.properties.e_mail;
+                let web = feature.properties.website;
+                let atl = feature.properties.n_atletas;
+                let inst = feature.properties.inst_qual;
+                let epd = feature.properties.espada;
+                let sbr = feature.properties.sabre;
+                let flt = feature.properties.florete;
+                let img_epee = '';
+                let img_saber = '';
+                let img_foil = '';
+                let leg_epee = '';
+                let leg_saber = '';
+                let leg_foil = '';
+
+                if (epd == "Sim") {
+                    img_epee = '<img class="weapon-icon" src=imagens/epee_icon.png>'
+                    leg_epee = '<span class="leg-opa">Espada</span>'}
+                else {
+                    img_epee = '<img class="weapon-transp" src=imagens/epee_icon.png>'
+                    leg_epee = '<span class="leg-transp">Espada</span>'};
+                
+                if (sbr == "Sim") {
+                    img_saber = '<img class="weapon-icon" src=imagens/saber_icon.png>'
+                    leg_saber = '<span class="leg-opa">Sabre</span>'}
+                else {
+                    img_saber = '<img class="weapon-transp" src=imagens/saber_icon.png>'
+                    leg_saber = '<span class="leg-transp">Sabre</span>'};
+
+                if (flt == "Sim") {
+                    img_foil = '<img class="weapon-icon" src=imagens/foil_icon.png>'
+                    leg_foil = '<span class="leg-opa">Florete</span>'}
+                else {
+                    img_foil = '<img class="weapon-transp" src=imagens/foil_icon.png>'
+                    leg_foil = '<span class="leg-transp">Florete</span>'};
+                ;  
+
+                layer.bindPopup('<span class="nome">' + nom + '</span><br>\
+                <span class="info">Morada: </span><span class="prop">' + mor + '</span><br>\
+                <span class="info">Telefone: </span><span class="prop">' + tel + '</span><br>\
+                <span class="info">E-Mail: </span><span class="prop"><a href="mailto: ' + mail + '">' +  mail + '</a></span><br>\
+                <span class="info">Página Web: </span><span class="prop"><a href="' + web + '">' + web + '</a></span><br>\
+                <span class="info">Número de Atletas: </span><span class="prop">' + atl + '</span><br>\
+                <span class="info">Qualidade das Instalações: </span><span class="prop">' + inst + '</span><br>\
+                <span class="info"> Armas Disponíveis:</span><br>\
+                <span>' + img_epee + '<span>' + img_saber + '<span>' + img_foil + '<br>\
+                ' + leg_epee + leg_saber + leg_foil
+                )    
+            }});
+
+        function espadaFilter(feature) {
+            if (feature.properties.espada === "Sim") return true
+        }
+        
+        addonMarkers1.addLayer(salasEspada);
+
+        //FILTRO SABRE
+        var salasSabre = L.geoJson(salas, {
+            filter: sabreFilter,
+            pointToLayer: function(feature, latlng) {
+            var sabre_icon = new L.Icon({
+                iconUrl: 'imagens/fencing_icon2_blue.png',
+                iconSize:     [35, 30.5], 
+                iconAnchor:   [12, 12], 
+                popupAnchor:  [6, -5]     
+                }
+            );
+            return L.marker(latlng, {icon: sabre_icon});
+            }, 
+            onEachFeature: function (feature, layer) {
+                let nom = feature.properties.nome;
+                let mor = feature.properties.morada;
+                let tel = feature.properties.telefone;
+                let mail = feature.properties.e_mail;
+                let web = feature.properties.website;
+                let atl = feature.properties.n_atletas;
+                let inst = feature.properties.inst_qual;
+                let epd = feature.properties.espada;
+                let sbr = feature.properties.sabre;
+                let flt = feature.properties.florete;
+                let img_epee = '';
+                let img_saber = '';
+                let img_foil = '';
+                let leg_epee = '';
+                let leg_saber = '';
+                let leg_foil = '';
+
+                if (epd == "Sim") {
+                    img_epee = '<img class="weapon-icon" src=imagens/epee_icon.png>'
+                    leg_epee = '<span class="leg-opa">Espada</span>'}
+                else {
+                    img_epee = '<img class="weapon-transp" src=imagens/epee_icon.png>'
+                    leg_epee = '<span class="leg-transp">Espada</span>'};
+                
+                if (sbr == "Sim") {
+                    img_saber = '<img class="weapon-icon" src=imagens/saber_icon.png>'
+                    leg_saber = '<span class="leg-opa">Sabre</span>'}
+                else {
+                    img_saber = '<img class="weapon-transp" src=imagens/saber_icon.png>'
+                    leg_saber = '<span class="leg-transp">Sabre</span>'};
+
+                if (flt == "Sim") {
+                    img_foil = '<img class="weapon-icon" src=imagens/foil_icon.png>'
+                    leg_foil = '<span class="leg-opa">Florete</span>'}
+                else {
+                    img_foil = '<img class="weapon-transp" src=imagens/foil_icon.png>'
+                    leg_foil = '<span class="leg-transp">Florete</span>'};
+                ;  
+
+                layer.bindPopup('<span class="nome">' + nom + '</span><br>\
+                <span class="info">Morada: </span><span class="prop">' + mor + '</span><br>\
+                <span class="info">Telefone: </span><span class="prop">' + tel + '</span><br>\
+                <span class="info">E-Mail: </span><span class="prop"><a href="mailto: ' + mail + '">' +  mail + '</a></span><br>\
+                <span class="info">Página Web: </span><span class="prop"><a href="' + web + '">' + web + '</a></span><br>\
+                <span class="info">Número de Atletas: </span><span class="prop">' + atl + '</span><br>\
+                <span class="info">Qualidade das Instalações: </span><span class="prop">' + inst + '</span><br>\
+                <span class="info"> Armas Disponíveis:</span><br>\
+                <span>' + img_epee + '<span>' + img_saber + '<span>' + img_foil + '<br>\
+                ' + leg_epee + leg_saber + leg_foil
+                )    
+            }});
+
+        function sabreFilter(feature) {
+            if (feature.properties.sabre == "Sim") return true
+        }
+        
+        addonMarkers2.addLayer(salasSabre);
+
+        //FILTRO FLORETE
+        var salasFlorete = L.geoJson(salas, {
+            filter: floreteFilter,
+            pointToLayer: function(feature, latlng) {
+            var florete_icon = new L.Icon({
+                iconUrl: 'imagens/fencing_icon2_green.png',
+                iconSize:     [35, 30.5], 
+                iconAnchor:   [12, 12], 
+                popupAnchor:  [6, -5]     
+                }
+            );
+            return L.marker(latlng, {icon: florete_icon});
+            }, 
+            onEachFeature: function (feature, layer) {
+                let nom = feature.properties.nome;
+                let mor = feature.properties.morada;
+                let tel = feature.properties.telefone;
+                let mail = feature.properties.e_mail;
+                let web = feature.properties.website;
+                let atl = feature.properties.n_atletas;
+                let inst = feature.properties.inst_qual;
+                let epd = feature.properties.espada;
+                let sbr = feature.properties.sabre;
+                let flt = feature.properties.florete;
+                let img_epee = '';
+                let img_saber = '';
+                let img_foil = '';
+                let leg_epee = '';
+                let leg_saber = '';
+                let leg_foil = '';
+
+                if (epd == "Sim") {
+                    img_epee = '<img class="weapon-icon" src=imagens/epee_icon.png>'
+                    leg_epee = '<span class="leg-opa">Espada</span>'}
+                else {
+                    img_epee = '<img class="weapon-transp" src=imagens/epee_icon.png>'
+                    leg_epee = '<span class="leg-transp">Espada</span>'};
+                
+                if (sbr == "Sim") {
+                    img_saber = '<img class="weapon-icon" src=imagens/saber_icon.png>'
+                    leg_saber = '<span class="leg-opa">Sabre</span>'}
+                else {
+                    img_saber = '<img class="weapon-transp" src=imagens/saber_icon.png>'
+                    leg_saber = '<span class="leg-transp">Sabre</span>'};
+
+                if (flt == "Sim") {
+                    img_foil = '<img class="weapon-icon" src=imagens/foil_icon.png>'
+                    leg_foil = '<span class="leg-opa">Florete</span>'}
+                else {
+                    img_foil = '<img class="weapon-transp" src=imagens/foil_icon.png>'
+                    leg_foil = '<span class="leg-transp">Florete</span>'};
+                ;  
+
+                layer.bindPopup('<span class="nome">' + nom + '</span><br>\
+                <span class="info">Morada: </span><span class="prop">' + mor + '</span><br>\
+                <span class="info">Telefone: </span><span class="prop">' + tel + '</span><br>\
+                <span class="info">E-Mail: </span><span class="prop"><a href="mailto: ' + mail + '">' +  mail + '</a></span><br>\
+                <span class="info">Página Web: </span><span class="prop"><a href="' + web + '">' + web + '</a></span><br>\
+                <span class="info">Número de Atletas: </span><span class="prop">' + atl + '</span><br>\
+                <span class="info">Qualidade das Instalações: </span><span class="prop">' + inst + '</span><br>\
+                <span class="info"> Armas Disponíveis:</span><br>\
+                <span>' + img_epee + '<span>' + img_saber + '<span>' + img_foil + '<br>\
+                ' + leg_epee + leg_saber + leg_foil
+                )    
+            }});
+
+        function floreteFilter(feature) {
+            if (feature.properties.florete == "Sim") return true
+        }
+        
+        addonMarkers3.addLayer(salasFlorete);
+
+        var baseMaps = {
+            'Satélite': Esri_WorldImagery,
+            'OpenStreetMaps': strMaps,
+            'ESRI': esri,
+        }
+        var overlayMaps = {
+            "Salas de Armas": markers,
+            "Salas com Espada": addonMarkers1,
+            "Salas com Sabre": addonMarkers2,
+            "Salas com Florete": addonMarkers3,
+            "Competições": addonMarkers,
+            "Nº Atletas": atletasLayer,
+        };
+        
+        L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+        var scale = L.control.scale();
+        scale.addTo(map);
+        
+        //LEGENDA
+        var Legend =  new L.Control.Legend({
+            position: 'bottomright',
+            collapsed: false,
+            controlButton: {
+                title: "Legend"
+            }
+        });
+        map.addControl( Legend );
+
+        $(".legend-container").append( $("#legend") );
+
+        //CLICK EVENT PARA TROCA DE LENGENDA
+        //VARIAVEIS PARA CLASS ELEMENTO
+        var salasGeral = document.getElementById("leg-item-geral")
+        var salasEsp = document.getElementById("leg-item-espada")
+        var salasSbr = document.getElementById("leg-item-sabre")
+        var salasFlt = document.getElementById("leg-item-florete")
+        var provas = document.getElementById("leg-item-comp")
+        var atletas = document.getElementById("leg-item-prop")
+        //FUNCAO ADD
+        map.on('overlayadd', function mostraLegendaGeral() {
+
+            //SALAS GERAK
+            if (map.hasLayer(markers)) {
+                salasGeral.style.display = "block"
+            }
+        
+            //SALAS ESPADA
+            if (map.hasLayer(addonMarkers1)){
+                salasEsp.style.display = "block"
+            }
+
+            //SALAS SABRE
+            if (map.hasLayer(addonMarkers2)){
+                salasSbr.style.display = "block"
+            }
+
+            //SALAS FLORETE
+            if (map.hasLayer(addonMarkers3)){
+                salasFlt.style.display = "block"
+            }
+
+            //COMPETICOES
+            if (map.hasLayer(addonMarkers)){
+                provas.style.display = "block"
+            }
+
+            //N ATLETAS
+            if (map.hasLayer(atletasLayer)){
+                atletas.style.display = "block"
+            }
+
+        })   
+        
+        //FUNCAO REMOVE
+        map.on('overlayremove', function removeLegendaGeral() {
+            //SALAS GERAL
+            if (map.hasLayer(markers)) {
+                salasGeral.style.display = "block"
+            }
+            else {
+                salasGeral.style.display = "none"
+            }
+
+            //SALAS ESPADA
+            if (map.hasLayer(addonMarkers1)){
+                salasEsp.style.display = "block"
+            }
+            else {  
+                salasEsp.style.display = "none"
+            }
+
+            //SALAS SABRE
+            if (map.hasLayer(addonMarkers2)){
+                salasSbr.style.display = "block"
+            }
+            else {  
+                salasSbr.style.display = "none"
+            }
+
+            //SALAS FLORETE
+            if (map.hasLayer(addonMarkers3)){
+                salasFlt.style.display = "block"
+            }
+            else {  
+                salasFlt.style.display = "none"
+            }
+
+            //COMPETICOES
+            if (map.hasLayer(addonMarkers)){
+                provas.style.display = "block"
+            }
+            else {  
+                provas.style.display = "none"
+            }
+
+            //N ATLETAS
+            if (map.hasLayer(atletasLayer)){
+                atletas.style.display = "block"
+            }
+            else {  
+                atletas.style.display = "none"
+            }
+        })
+
+
+
+        </script>
+    </body>
+</html>

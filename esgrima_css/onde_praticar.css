@@ -1,0 +1,175 @@
+.onde{
+    margin-top: 30px;
+    padding: 10px;
+    background-color: rgb(163, 163, 163);
+    text-align: center;
+}
+h2 {
+    font-family: Helvetica, sans-serif;
+}
+#map{
+    width: auto;
+    height: 670px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 15px;
+    border: 1.5px solid black;
+    border-radius: 10px;
+    opacity: 1;
+}
+.nome {
+    text-align: center;
+    font-weight: bold;
+    font-size: 11pt;
+}
+.info {
+    text-align: left;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.prop {
+    font-size: 11px;
+}
+.prop-name {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.custom-popup .leaflet-popup-content-wrapper {
+    width: "auto";
+    height: "auto";
+    background: lightgrey;
+    color: black;
+    border-radius: 10px;
+    padding: 2px;
+}
+.custom-popup .leaflet-popup-tip {
+    background: lightgrey;
+    box-shadow: none;
+  }
+.weapon-icon{
+    height: 65px; 
+    width: "auto"; 
+    opacity: 1;
+}
+.weapon-transp {
+    height: 65px; 
+    width: "auto"; 
+    opacity: 0.3;
+}
+.comp-img {
+    max-width: 150px;
+    height: auto;
+    border: solid black 1px;
+}
+.leg-opa {
+    margin-right: 35px;
+    font-weight: bold;
+    opacity: 1;
+}
+.leg-transp {
+    margin-right: 35px;
+    font-weight: bold;
+    opacity: 0.3;
+}
+
+.leaflet-right {
+    right: 0;
+}
+.leaflet-top {
+    top: 0;
+}
+
+.espada {
+    display: hidden;
+    background-color: white;
+    margin: 0 0;
+    padding-bottom: 3px;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 9px;
+    border: solid black 1px;
+}
+.sabre {
+    text-align: left;
+    display: hidden;
+    background-color: white;
+    margin: 0 0;
+    padding-bottom: 3px;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 17px;
+    border: solid black 1px;
+}
+.florete {
+    text-align: left;
+    display: hidden;
+    background-color: white;
+    margin: 0 0;
+    padding-bottom: 3px;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 12px;
+    border: solid black 1px;
+}
+#legend {
+    padding: 10px 10px;
+    border: 1px black solid;
+    border-radius: 5px;
+    width: fit-content;
+    max-width: 200px;
+
+}
+.leg-icon-geral {
+    width: 30px;
+    height: auto;
+    padding-left: 80px;
+}
+.leg-icon-espada {
+    width: 30px;
+    height: auto;
+    padding-left: 10px;
+}
+.leg-icon-sabre {
+    width: 30px;
+    height: auto;
+    padding-left: 20px;
+}
+.leg-icon-florete {
+    width: 30px;
+    height: auto;
+    padding-left: 12px;
+}
+.leg-icon-comp {
+    width: 30px;
+    height: auto;
+    padding-left: 100px;
+}
+.leg-icon-prop {
+    width: 30px;
+    height: auto;
+}
+.leg-text {
+    float: right; 
+    margin-top: 5px;
+}
+
+#leg-item-geral {
+    display: block;
+}
+#leg-item-espada {
+    display: none;
+}
+#leg-item-sabre {
+    display: none;
+}
+#leg-item-florete {
+    display: none;
+}
+#leg-item-comp {
+    display: none;
+}
+#leg-item-prop {
+    display: none;
+}

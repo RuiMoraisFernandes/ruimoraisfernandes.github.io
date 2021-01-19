@@ -1,0 +1,2 @@
+var nsgd ={
+    "type":"Feature","id":2,"geometry":{"type":"Point","coordinates":[-8.6219888126856752,40.998803881317905]},"properties":{"FID":2,"Id":0,"nome":"Novasemente Grupo Desportivo","distrito":"Aveiro","localidade":"Anta","morada":"Rua da Nave","cod_postal":"4500-021","telefone":961040379,"e_mail":"esgrima.espinho@gmail.com","website":"https://www.facebook.com/EsgrimaEspinho","n_atletas":38,"inst_qual":"Boa","espada":"Não","sabre":"Não","florete":"Sim"}}
