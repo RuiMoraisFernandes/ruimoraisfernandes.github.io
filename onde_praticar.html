@@ -507,6 +507,7 @@
         var salasFlt = document.getElementById("leg-item-florete")
         var provas = document.getElementById("leg-item-comp")
         var atletas = document.getElementById("leg-item-prop")
+        var leg = document.getElementById("legend")
         //FUNCAO ADD
         map.on('overlayadd', function mostraLegendaGeral() {
 
@@ -539,6 +540,9 @@
             if (map.hasLayer(atletasLayer)){
                 atletas.style.display = "block"
             }
+
+            //DISPLAY CAIXA LEGENDA
+            leg.style.display = "block";
 
         })   
         
@@ -591,10 +595,15 @@
             else {  
                 atletas.style.display = "none"
             }
+
+            //DISPLAY CAIXA LEGENDA
+            if (map.hasLayer(markers) || map.hasLayer(addonMarkers1) || map.hasLayer(addonMarkers2) || map.hasLayer(addonMarkers3) || map.hasLayer(addonMarkers) || map.hasLayer(atletasLayer)) {
+                leg.style.display = "block"
+                }
+            else {
+                leg.style.display = "none"
+            }
         })
-
-
-
         </script>
     </body>
 </html>
